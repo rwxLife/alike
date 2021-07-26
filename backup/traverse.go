@@ -1,6 +1,6 @@
 package backup
 
-// TraverseAndDoEncryptedBackups will recursively traverse the source path
+// TraverseAndDoEncryptedBackup will recursively traverse the source path
 // and if it comes across a file during the process, it will encrypt the file
 // and store its checksum in the meta file of its root directory.
 func TraverseAndDoEncryptedBackup(source string, destination string) {
