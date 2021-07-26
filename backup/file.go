@@ -4,11 +4,6 @@ import (
 	"os"
 )
 
-type meta struct {
-	fileName string
-	checksum string
-}
-
 // extractName will get you the name of the file or the directory from the given
 // variable 'path'
 func extractName(path string) string {
@@ -81,4 +76,15 @@ func getDirectoryListing(path string) []string {
 		list = append(list, entry.Name())
 	}
 	return list
+}
+
+// writeToDisk will write given 'file' to disk at the given 'path'
+func writeToDisk(path string, file string) {
+
+}
+
+// removeFile is just 'rm'
+func removeFile(path string) {
+	err := os.Remove(path)
+	handleError(err)
 }
