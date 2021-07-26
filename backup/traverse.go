@@ -18,6 +18,7 @@ func TraverseAndDoEncryptedBackup(source string, destination string) {
 		return
 	}
 
+	createMetaIfNotFound(destination)
 	encryptAndBackup(source, destination)
 }
 
@@ -37,6 +38,7 @@ func TraverseAndDecryptBackup(source string, destination string) {
 		return
 	}
 
+	createMetaIfNotFound(destination)
 	decryptAndRestore(source, destination)
 }
 
