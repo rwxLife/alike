@@ -27,6 +27,27 @@ func extractName(path string) string {
 	return string(arr)
 }
 
+func extractParent(path string) string {
+
+	arr := make([]rune, 0)
+	length := len(path)
+
+	lastIndex := length - 1
+	if path[lastIndex] == '/' {
+		lastIndex--
+	}
+
+	for path[lastIndex] != '/' {
+		lastIndex--
+	}
+
+	for i := 0; i <= lastIndex; i++ {
+		arr = append(arr, rune(path[i]))
+	}
+
+	return string(arr)
+}
+
 // isDirectory will tell you if the given 'path' is a directory
 func isDirectory(path string) bool {
 

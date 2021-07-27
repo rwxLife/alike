@@ -27,6 +27,27 @@ func TestExtractName(t *testing.T) {
 	}
 }
 
+// TestExtractParent will test the function: extractParent
+func TestExtractParent(t *testing.T) {
+
+	testCases := []struct {
+		input    string
+		expected string
+	}{
+		{"../word/", "../"},
+		{"/a/b/c/word", "/a/b/c/"},
+		{"/a/b/c/file.txt", "/a/b/c/"},
+	}
+
+	for _, testCase := range testCases {
+
+		got := extractParent(testCase.input)
+		if got != testCase.expected {
+			log.Fatalf("Input: %s, Expected: %s, Got: %s", testCase.input, testCase.expected, got)
+		}
+	}
+}
+
 // TestIsDirectory will run a bunch of cases for the function: isDirectory
 func TestIsDirectory(t *testing.T) {
 
