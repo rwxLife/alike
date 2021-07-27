@@ -55,7 +55,7 @@ func encryptAndBackup(source string, destination string) {
 
 	fileName := extractName(source)
 	cs := getCheckSum(source)
-	metaData := createMetaData(fileName, cs)
+	metaData := createMetaData(cs, fileName)
 	fileExists, checkSumExists := checkMetaExistence(metaData, destination)
 
 	if fileExists && checkSumExists {
@@ -64,7 +64,11 @@ func encryptAndBackup(source string, destination string) {
 
 	if fileExists && !checkSumExists {
 		updateMeta(metaData, destination)
-		removeFile(destination)
+		removeFile(destination + fileName)
+	}
+
+	if !fileExists {
+		addToMeta(metaData, destination)
 	}
 
 	encrypted := encryptFile(source)
