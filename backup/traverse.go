@@ -91,6 +91,8 @@ func encryptAndBackup(source string, destination string) {
 func decryptAndRestore(source string, destination string) {
 
 	fileName := extractName(source)
-	decrypted := decryptFile(source)
-	writeToDisk(destination+fileName, decrypted)
+	if fileName != ".meta" {
+		decrypted := decryptFile(source)
+		writeToDisk(destination+fileName, decrypted)
+	}
 }
