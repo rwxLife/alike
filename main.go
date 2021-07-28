@@ -12,6 +12,19 @@ import (
 	"golang.org/x/term"
 )
 
+const (
+	asciiLogo = `
+     ###    ##       #### ##    ## ########
+    ## ##   ##        ##  ##   ##  ##
+   ##   ##  ##        ##  ##  ##   ##
+  ##     ## ##        ##  #####    ######
+  ######### ##        ##  ##  ##   ##
+  ##     ## ##        ##  ##   ##  ##
+  ##     ## ######## #### ##    ## ########`
+	colorReset = "\033[0m"
+	colorCyan  = "\033[36m"
+)
+
 // usage will print the information about the 'alike' command
 func usage() {
 
@@ -42,7 +55,19 @@ func acquirePassword() {
 	fmt.Println()
 }
 
+func printColor(colorName string) {
+
+	os := runtime.GOOS
+	if os != "windows" {
+		fmt.Print(colorName)
+	}
+}
+
 func main() {
+
+	printColor(colorCyan)
+	fmt.Println(asciiLogo)
+	printColor(colorReset)
 
 	argLength := len(os.Args)
 
