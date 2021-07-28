@@ -99,9 +99,15 @@ func getDirectoryListing(path string) []string {
 	return list
 }
 
-// writeToDisk will write given 'file' to disk at the given 'path'
-func writeToDisk(path string, file string) {
+// writeToDisk will write the given 'stream' of bytes to disk at the given 'path'
+func writeToDisk(path string, stream []byte) {
 
+	file, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, permissionRWRR)
+	handleError(err)
+	defer file.Close()
+
+	_, err = file.Write(stream)
+	handleError(err)
 }
 
 // removeFile is just 'rm'
