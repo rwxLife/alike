@@ -7,6 +7,7 @@ func TraverseAndDoEncryptedBackup(source string, destination string) {
 
 	if isDirectory(source) {
 
+		source = appendSeparator(source)
 		dirName := extractName(source)
 		setupDirectory(destination, dirName)
 		contents := getDirectoryListing(source)
@@ -28,7 +29,9 @@ func TraverseAndDecryptBackup(source string, destination string) {
 
 	if isDirectory(source) {
 
+		source = appendSeparator(source)
 		dirName := extractName(source)
+		makeDirectory(destination, dirName)
 		contents := getDirectoryListing(source)
 
 		for _, element := range contents {
@@ -40,6 +43,15 @@ func TraverseAndDecryptBackup(source string, destination string) {
 
 	createMetaIfNotFound(destination)
 	decryptAndRestore(source, destination)
+}
+
+// appendSeparator will add '/' to the end of the 'source' if it does not exist
+func appendSeparator(source string) string {
+
+	if len(source) != 0 && source[len(source)-1] != '/' {
+		source += "/"
+	}
+	return source
 }
 
 // setupDirectory will do create the directory along with its
