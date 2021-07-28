@@ -84,12 +84,13 @@ func encryptAndBackup(source string, destination string) {
 	}
 
 	encrypted := encryptFile(source)
-	writeToDisk(destination, encrypted)
+	writeToDisk(destination+fileName, encrypted)
 }
 
 // decryptAndRestore will decrypt the given file and write to disk
 func decryptAndRestore(source string, destination string) {
 
+	fileName := extractName(source)
 	decrypted := decryptFile(source)
-	writeToDisk(destination, decrypted)
+	writeToDisk(destination+fileName, decrypted)
 }
