@@ -83,7 +83,7 @@ func useAES256CTR(stream []byte) []byte {
 
 	// AES256
 	blockCipher, err := aes.NewCipher(alikeKey)
-	handleError(err)
+	handleError("useAES256CTR: AES256 cipher ", err)
 
 	// Prepare for CTR mode
 	ctr := cipher.NewCTR(blockCipher, alikeIV)
@@ -106,12 +106,12 @@ func encryptFile(path string) []byte {
 
 	// Manage file
 	file, err := os.Open(path)
-	handleError(err)
+	handleError("encryptFile: file I/O ", err)
 	defer file.Close()
 
 	// Get all bytes
 	stream, err := ioutil.ReadAll(file)
-	handleError(err)
+	handleError("decryptFile: getting bytes ", err)
 
 	// Encrypt in CTR mode
 	encrypted := useAES256CTR(stream)

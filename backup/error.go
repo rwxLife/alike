@@ -2,9 +2,9 @@ package backup
 
 import "log"
 
-func handleError(err error) {
+func handleError(content string, err error) {
 
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(content, err)
 	}
 }

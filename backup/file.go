@@ -52,7 +52,7 @@ func extractParent(path string) string {
 func isDirectory(path string) bool {
 
 	info, err := os.Stat(path)
-	handleError(err)
+	handleError("isDirectory: ", err)
 	return info.IsDir()
 }
 
@@ -71,7 +71,7 @@ func createMetaIfNotFound(path string) {
 	if os.IsNotExist(err) {
 
 		file, err := os.Create(filePath)
-		handleError(err)
+		handleError("createMetaIfNotFound: ", err)
 		file.Close()
 	}
 }
@@ -85,13 +85,13 @@ func makeDirectory(path string, name string) {
 	}
 	dirPath := path + slash + name
 	err := os.Mkdir(dirPath, 0755)
-	handleError(err)
+	handleError("makeDirectory: ", err)
 }
 
 // getDirectoryListing is basically your 'ls' command for the given directory
 func getDirectoryListing(path string) []string {
 	entries, err := os.ReadDir(path)
-	handleError(err)
+	handleError("getDirectoryListing: ", err)
 	var list []string = make([]string, 0)
 	for _, entry := range entries {
 		list = append(list, entry.Name())
@@ -103,15 +103,15 @@ func getDirectoryListing(path string) []string {
 func writeToDisk(path string, stream []byte) {
 
 	file, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, permissionRWRR)
-	handleError(err)
+	handleError("writeToDisk: file read ", err)
 	defer file.Close()
 
 	_, err = file.Write(stream)
-	handleError(err)
+	handleError("writeToDisk: file write ", err)
 }
 
 // removeFile is just 'rm'
 func removeFile(path string) {
 	err := os.Remove(path)
-	handleError(err)
+	handleError("removeFile: ", err)
 }

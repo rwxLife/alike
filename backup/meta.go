@@ -15,12 +15,12 @@ func addToMeta(metaData *meta, path string) {
 
 	// Manage file
 	file, err := os.OpenFile(path+".meta", os.O_APPEND|os.O_WRONLY, permissionRWRR)
-	handleError(err)
+	handleError("addToMeta: file I/O ", err)
 	defer file.Close()
 
 	// Append
 	_, err = fmt.Fprintf(file, metaReadWriteFormat, metaData.checksum, metaData.fileName)
-	handleError(err)
+	handleError("addToMeta: append ", err)
 }
 
 // createMetaData will return a reference to a new meta object
@@ -34,7 +34,7 @@ func checkMetaExistence(metaData *meta, path string) (bool, bool) {
 
 	// Manage file
 	file, err := os.OpenFile(path+".meta", os.O_RDONLY, permissionRWRR)
-	handleError(err)
+	handleError("checkMetaExistence: meta file open ", err)
 	defer file.Close()
 
 	// Result vars
@@ -52,7 +52,7 @@ func checkMetaExistence(metaData *meta, path string) (bool, bool) {
 		if (err != nil && err.Error() == "EOF") || n == 0 {
 			break
 		}
-		handleError(err)
+		handleError("checkMetaExistence: meta file read ", err)
 
 		if one == metaData.checksum {
 			checkSumExists = true
@@ -71,7 +71,7 @@ func checkMetaExistence(metaData *meta, path string) (bool, bool) {
 func updateMeta(metaData *meta, path string) {
 
 	reader, err := os.OpenFile(path+".meta", os.O_RDONLY, permissionRWRR)
-	handleError(err)
+	handleError("updateMeta: file open ", err)
 
 	// For storing a line's content
 	var one string
@@ -87,7 +87,7 @@ func updateMeta(metaData *meta, path string) {
 		if (err != nil && err.Error() == "EOF") || n == 0 {
 			break
 		}
-		handleError(err)
+		handleError("updateMeta: file read ", err)
 
 		if two == metaData.fileName {
 			one = metaData.checksum
@@ -99,13 +99,13 @@ func updateMeta(metaData *meta, path string) {
 
 	// Manage writer
 	writer, err := os.OpenFile(path+".metacopy", os.O_CREATE|os.O_WRONLY, permissionRWRR)
-	handleError(err)
+	handleError("updateMeta: metacopy open ", err)
 	defer writer.Close()
 
 	// Write all content from memory to disk
 	for _, element := range arr {
 		_, err = fmt.Fprintf(writer, metaReadWriteFormat, element.checksum, element.fileName)
-		handleError(err)
+		handleError("updateMeta: metacopy write ", err)
 	}
 
 	// Kill the outdated .meta
@@ -113,5 +113,5 @@ func updateMeta(metaData *meta, path string) {
 
 	// Rename the copy
 	err = os.Rename(path+".metacopy", path+".meta")
-	handleError(err)
+	handleError("updateMeta: renaming ", err)
 }
