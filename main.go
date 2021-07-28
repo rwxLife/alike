@@ -2,9 +2,14 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
+	"runtime"
+	"strings"
+	"syscall"
 
 	"github.com/rwxLife/alike/backup"
+	"golang.org/x/term"
 )
 
 // usage will print the information about the 'alike' command
@@ -14,6 +19,27 @@ func usage() {
 	fmt.Println("Possible values for, \"OPERATION\": backup, restore")
 	fmt.Println("Flags")
 	fmt.Println("--help: display this help and exit")
+}
+
+// acquirePassword will prompt the user to enter a password
+func acquirePassword() {
+
+	fmt.Print("Enter password: ")
+	binput, err := term.ReadPassword(int(syscall.Stdin))
+	input := string(binput)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if runtime.GOOS != "windows" {
+		input = strings.Replace(input, "\n", "", -1)
+	} else {
+		input = strings.Replace(input, "\r\n", "", -1)
+	}
+
+	os.Setenv("ALIKE_PASSWORD", input)
+	fmt.Println()
 }
 
 func main() {
@@ -32,6 +58,9 @@ func main() {
 	operation := os.Args[1]
 	source := os.Args[2]
 	destination := os.Args[3]
+
+	acquirePassword()
+	backup.CalculateCredentials()
 
 	if operation == "backup" {
 		backup.TraverseAndDoEncryptedBackup(source, destination)
