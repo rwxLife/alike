@@ -84,8 +84,11 @@ func makeDirectory(path string, name string) {
 		slash = "/"
 	}
 	dirPath := path + slash + name
-	err := os.Mkdir(dirPath, 0755)
-	handleError("makeDirectory: ", err)
+
+	if _, er := os.Stat(dirPath); os.IsNotExist(er) {
+		err := os.Mkdir(dirPath, 0755)
+		handleError("makeDirectory: ", err)
+	}
 }
 
 // getDirectoryListing is basically your 'ls' command for the given directory
