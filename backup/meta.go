@@ -3,6 +3,7 @@ package backup
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 type meta struct {
@@ -19,7 +20,7 @@ func addToMeta(metaData *meta, path string) {
 	defer file.Close()
 
 	// Append
-	_, err = fmt.Fprintf(file, metaReadWriteFormat, metaData.checksum, metaData.fileName)
+	_, err = fmt.Fprintf(file, metaReadWriteFormat, metaData.checksum, killWhiteSpaces(metaData.fileName))
 	handleError("addToMeta: append ", err)
 }
 
@@ -54,6 +55,7 @@ func checkMetaExistence(metaData *meta, path string) (bool, bool) {
 		}
 		handleError("checkMetaExistence: meta file read ", err)
 
+		metaData.fileName = restoreWhiteSpaces(metaData.fileName)
 		if one == metaData.checksum {
 			checkSumExists = true
 		}
@@ -89,6 +91,7 @@ func updateMeta(metaData *meta, path string) {
 		}
 		handleError("updateMeta: file read ", err)
 
+		metaData.fileName = restoreWhiteSpaces(metaData.fileName)
 		if two == metaData.fileName {
 			one = metaData.checksum
 		}
@@ -104,7 +107,7 @@ func updateMeta(metaData *meta, path string) {
 
 	// Write all content from memory to disk
 	for _, element := range arr {
-		_, err = fmt.Fprintf(writer, metaReadWriteFormat, element.checksum, element.fileName)
+		_, err = fmt.Fprintf(writer, metaReadWriteFormat, element.checksum, killWhiteSpaces(element.fileName))
 		handleError("updateMeta: metacopy write ", err)
 	}
 
@@ -114,4 +117,16 @@ func updateMeta(metaData *meta, path string) {
 	// Rename the copy
 	err = os.Rename(path+".metacopy", path+".meta")
 	handleError("updateMeta: renaming ", err)
+}
+
+// replace " " with "%20"
+func killWhiteSpaces(path string) string {
+
+	return strings.ReplaceAll(path, " ", "%20")
+}
+
+// restore "%20" with " "
+func restoreWhiteSpaces(path string) string {
+
+	return strings.ReplaceAll(path, "%20", " ")
 }
