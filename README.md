@@ -22,7 +22,7 @@
 
 ## What?
 
-`alike` is a program that lets you take **incremental and encrypted** backups of anything. When I say that it is incremental, I mean that `alike` remembers the state of the files. Let's say you had taken a backup of a directory once, and you updated some files into that directory. And now you want to back up the latest version of your directory. A traditional backup program would delete the whole backed-up directory and re-run the whole sequence. alike does not do that. In subsequent attempts to run `alike` over a directory, it runs only for the files that have changed. The encryption used in this program is state-of-the-art ([AES-256](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) in [CTR mode](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR))). Backups can be restored whenever needed.
+`alike` is a program that lets you take **incremental and encrypted** backups of anything. When I say that it is incremental, I mean that `alike` remembers the state of the files. Let's say you had taken a backup of a directory once, and you updated some files into that directory. And now you want to back up the latest version of your directory. A traditional backup program would delete the whole backed-up directory and re-run the whole sequence. `alike` does not do that. In subsequent attempts to run `alike` over a directory, it runs only for the files that have changed. The encryption used in this program is state-of-the-art ([AES-256](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) in [CTR mode](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR))). Backups can be restored whenever needed.
 
 ## Why?
 
@@ -52,7 +52,7 @@ There are two operations that this program can do: `backup` and `restore`. Below
 
 You might be interested in tinkering with the source code and/or just building the program from source. Here's how you can do it. 
 
-This program is created using `Go v1.16`. Make sure you have it installed along with the tools associated with `Go` for building, testing, and formatting source code. A `Makefile` is used for getting things done at this so you need to have `make` installed in your system (get it from here). On UNIX systems, make sure that you have a directory called `bin` under `~` or `/home/$USER`. 
+This program is created using `Go v1.16`. Make sure you have it installed along with the tools associated with `Go` for building, testing, and formatting source code. A `Makefile` is used for getting things done at ease so you need to have `make` installed in your system (get it from [here](https://www.gnu.org/software/make/)). On UNIX systems, make sure that you have a directory called `bin` under `~` or `/home/$USER`. 
 
 1. Clone this repository (by downloading or running `git clone`).
 2. ```bash
@@ -66,7 +66,7 @@ This program is created using `Go v1.16`. Make sure you have it installed along 
 
 ## Contributing
 
-All kinds of contributions to this repository will be appreciated. You can contribute by making this documentation better, by talking about bugs in the issues section, by fixing bugs, by requesting new features, or by adding new features. If you submit a pull request that contains code, make sure that the code is formatted using `gofmt` and if it requires tests, it is well tested using `make test`. It is ideal to links PRs with issues. Read more about the guidelines over [here](./CONTRIBUTING.md).
+All kinds of contributions to this repository will be appreciated. You can contribute by making this documentation better, by talking about bugs in the issues section, by fixing bugs, by requesting new features, or by adding new features. If you submit a pull request that contains code, make sure that the code is formatted using `gofmt` and if it requires tests, it should be well tested using `make test`. It is ideal to links PRs with issues. Read more about the guidelines over [here](./CONTRIBUTING.md).
 
 ## License
 
