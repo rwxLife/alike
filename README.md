@@ -44,7 +44,7 @@ There are two operations that this program can do: `backup` and `restore`. Below
 
 2. Although AES-256 is used under the hood which is the most secure algorithm, the first entry point of the program requires a user-provided password. It is advised to use a strong password. This will get easier in the future as we have plans to release a password manager under the `rwxLife` project. 
 
-3. While restoring, the same password should be used which was used for backing-up. Using a different password could lead to corruption of the backup data. 
+3. While restoring, the same password should be used which was used for backing-up. Using a different password could lead to incorrect production of restored data.  
 
 4. Each directory inside the the backed-up data contains a `.meta` file. This should not be tampered with. While tampering would not cause issues in the restoration of data, it could cause issues while taking subsequent/incremental backups. 
 
