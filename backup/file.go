@@ -1,6 +1,7 @@
 package backup
 
 import (
+	"log"
 	"os"
 )
 
@@ -111,6 +112,9 @@ func writeToDisk(path string, stream []byte) {
 
 	_, err = file.Write(stream)
 	handleError("writeToDisk: file write ", err)
+
+	// Log
+	log.Println("WRITTEN TO: ", path)
 }
 
 // removeFile is just 'rm'

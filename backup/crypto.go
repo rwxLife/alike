@@ -5,6 +5,7 @@ import (
 	"crypto/cipher"
 	"crypto/sha256"
 	"io/ioutil"
+	"log"
 	"os"
 )
 
@@ -103,6 +104,9 @@ func useAES256CTR(stream []byte) []byte {
 
 // encryptFile will encrypt the given file using AES256-CTR
 func encryptFile(path string) []byte {
+
+	// Log
+	log.Println("WORKING ON: ", path)
 
 	// Manage file
 	file, err := os.Open(path)
